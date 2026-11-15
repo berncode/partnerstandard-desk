@@ -30,7 +30,7 @@ function Brand({ onNavigate }: { onNavigate?: () => void }) {
     <AppLink href="/" aria-label={ours ? COPY.APP_NAME : COPY.COMMUNITY_APP_NAME} onClick={onNavigate} className="flex min-w-0 items-center gap-2 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-brand">
       {ours ? (
         <>
-          <span className="group-data-[collapsed=true]:hidden"><Logo className="h-6 w-auto" /></span>
+          <span className="group-data-[collapsed=true]:hidden"><Logo className="h-8 w-auto" /></span>
           <span className={`text-[11px] group-data-[collapsed=true]:hidden ${BADGE_PARTNERSTANDARD}`}>{COPY.APP_BADGE}</span>
           <span aria-hidden className="hidden size-8 items-center justify-center rounded-lg bg-brand-soft text-sm font-bold text-brand-strong group-data-[collapsed=true]:flex">P</span>
         </>
