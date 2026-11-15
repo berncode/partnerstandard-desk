@@ -40,7 +40,7 @@ Open http://localhost:3000 and sign in with test sign-in. To try the company ser
 
 ## The gate
 
-Before every commit, everything you touched passes:
+GitHub runs the full gate on your pull request (after a maintainer approves the run). Before you push, run it yourself, or at least the parts your change touches:
 
 ```bash
 pnpm test && pnpm typecheck && pnpm lint && pnpm build && pnpm e2e

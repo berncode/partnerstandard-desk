@@ -1,16 +1,30 @@
 name: gate
 
+# The full check, on GitHub. It runs:
+# - on every push to preproduction (the owner's work): the pull request from preproduction into main then shows these
+#   same results, for the same commit, and can be merged at once;
+# - on every pull request into preproduction (outside contributions; a first-time or outside contributor's run waits
+#   for the owner's "Approve and run");
+# - by hand (Actions, gate, Run workflow).
+# Its parts run side by side; `gate` is green only when the unit checks and the browser tests both are. The branch rule
+# for main requires `gate` and `image`.
 on:
+  push:
+    branches: [preproduction]
   pull_request:
-    branches: [main, preproduction]
+    branches: [preproduction]
   workflow_dispatch:
 
 concurrency:
   group: gate-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
-  gate:
+  # Unit tests, types and lint: no build needed.
+  unit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,18 +34,54 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test
       - run: pnpm typecheck
       - run: pnpm lint
-      - run: pnpm build
-      # Both editions: Playwright makes a fresh database for each, at .data/e2e/hosted and
-      # .data/e2e/database, and starts two servers from one build: hosted on 3800 (migrated first) and a company server
-      # (EDITION=self-hosted) on 3801, which migrates its own on start (apps/web/playwright.config.ts). Both
-      # run with test sign-in and without VERCEL_ENV.
+
+  # The browser tests on both editions. Playwright builds the app once and starts two servers from that build: hosted
+  # on 3800 (migrated first) and a company server (EDITION=self-hosted) on 3801, which migrates its own on start
+  # (apps/web/playwright.config.ts). Both run with test sign-in and without VERCEL_ENV. The build is part of this job,
+  # so a build error fails it too.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Browser for the tests (kept between runs)
+        id: browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - if: steps.browsers.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+      - if: steps.browsers.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
       - run: pnpm e2e
         env:
           CI: '1'
+      # What a failed test saw (screenshots, page snapshots, traces), kept for a week.
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results
+          path: apps/web/.playwright/results
+          retention-days: 7
+
+  # The name the branch rule for main requires: green only when both parts above are.
+  gate:
+    needs: [unit, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "unit: ${{ needs.unit.result }}, e2e: ${{ needs.e2e.result }}"
+          test "${{ needs.unit.result }}" = success && test "${{ needs.e2e.result }}" = success
 
   # The self-hosted image: built and started as a company runs it, so a Dockerfile that misses a new package
   # fails here, not on a release tag. amd64 only; the release workflow checks arm64 too.
