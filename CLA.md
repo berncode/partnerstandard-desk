@@ -2,7 +2,7 @@
 
 Every outside contribution to PartnerStandard Desk needs a signed contributor agreement (CLA), so PartnerStandard can also offer the project under other terms. You keep your copyright. The agreement is below.
 
-**How to sign:** online, through CLA Assistant, which asks you on your first pull request. Signing is being set up: **until it is, we can't merge pull requests from outside.** Issues, ideas and bug reports are welcome now.
+**How to sign:** online, through CLA Assistant (https://cla-assistant.io/berncode/partnerstandard-desk). It asks you on your first pull request; you sign once, with your GitHub account.
 
 ## PartnerStandard Desk: Individual Contributor Agreement
 
