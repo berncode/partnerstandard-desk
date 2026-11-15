@@ -1,4 +1,5 @@
 name: gate
+# Runs on every pull request into main or preproduction, and by hand (Actions, gate, Run workflow).
 
 on:
   pull_request:
