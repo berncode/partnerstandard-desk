@@ -8,6 +8,10 @@ Your contribution goes into the project under the project's own licenses: code u
 
 CLA Assistant asks you to sign on your first pull request; you sign once, with your GitHub account. We can merge a pull request once it is signed.
 
+## Where your pull request goes
+
+Open your pull request against the **`preproduction`** branch, not `main`. We test changes on our staging server from `preproduction`, and bring them into `main` together after that.
+
 ## How we work
 
 The order that worked for us. Skipping the design cost more than writing it.

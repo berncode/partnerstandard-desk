@@ -5,3 +5,12 @@ allowBuilds:
   esbuild: false
   sharp: false
   unrs-resolver: false
+# Security fixes for libraries we only get through others (Dependabot, 2026-11-15). Remove each line once the package
+# that brings it in ships a fixed version by itself.
+overrides:
+  # minimatch: denial of service through crafted patterns (fixed in 11.0.1). Through eslint and typescript-eslint.
+  'minimatch@>=7.0.0 <11.0.1': '^11.0.1'
+  # glob: a cancelled search kept walking the files (fixed in 14.0.2). Through react-email.
+  'glob@>=9.0.0 <=14.0.1': '^14.0.2'
+  # esbuild: its development server answered any website (fixed in 0.25.0). Through drizzle-kit's @esbuild-kit loader.
+  '@esbuild-kit/core-utils>esbuild': '^0.25.0'
