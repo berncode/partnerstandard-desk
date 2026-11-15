@@ -77,13 +77,15 @@ Next.js 16 has breaking changes: APIs, conventions and file structure may differ
 
 ## The gate
 
-Before every commit, everything you touched passes:
+The full gate is:
 
 ```bash
 pnpm test && pnpm typecheck && pnpm lint && pnpm build && pnpm e2e
 ```
 
-Never commit red. Never skip, disable or loosen a test to get green; fix the cause or ask.
+GitHub runs it on every push to `preproduction` and on every pull request into it (`.github/workflows/gate.yml`); `main` takes only a commit whose gate and image checks are green. Before you push, run the tests for what you touched (for example `pnpm exec vitest run <files>`, `pnpm typecheck`, `pnpm lint`, and the e2e specs of the screens you changed). Run the whole gate locally when a change reaches across the app.
+
+Never push red. Never skip, disable or loosen a test to get green; fix the cause or ask.
 
 ## License
 
