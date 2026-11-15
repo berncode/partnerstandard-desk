@@ -1,0 +1,12 @@
+# Litestream streams the database to S3-type storage, a few seconds behind each save (docs/self-hosting.md, Backups).
+# Every value comes from .env: nothing secret is written here.
+dbs:
+  - path: /data/partnerstandard-desk.db
+    replica:
+      type: s3
+      bucket: ${LITESTREAM_BUCKET}
+      path: ${LITESTREAM_PATH}
+      # Empty for AWS; the provider's address for anything else, like https://fsn1.your-objectstorage.com (Hetzner)
+      # or https://<account>.r2.cloudflarestorage.com (Cloudflare R2).
+      endpoint: ${LITESTREAM_ENDPOINT}
+      region: ${LITESTREAM_REGION}

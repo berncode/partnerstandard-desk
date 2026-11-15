@@ -1,0 +1,49 @@
+{
+  "title": "Privacy Policy",
+  "effective": "2026-11-10",
+  "standIn": true,
+  "intro": [
+    "This is a stand-in. PartnerStandard Desk's hosted service at https://desk.partnerstandard.com shows its operator's own privacy policy, which its build adds from a private place. A server you run yourself shows none of these pages: it links to your own, set with `LEGAL_PRIVACY_URL` (deploy/.env.example)."
+  ],
+  "sections": [
+    {
+      "heading": "1. What this page is",
+      "blocks": [
+        "The text of a privacy policy, as data: a title, the date it takes effect, and numbered sections."
+      ]
+    },
+    {
+      "heading": "2. How a page is laid out",
+      "blocks": [
+        {
+          "subheading": "Its parts"
+        },
+        {
+          "list": [
+            "A title and the date it takes effect",
+            "An introduction",
+            "Numbered sections, with paragraphs, lists and tables"
+          ]
+        },
+        {
+          "table": {
+            "head": [
+              "Part",
+              "Holds"
+            ],
+            "rows": [
+              [
+                "Title",
+                "The name of the page"
+              ],
+              [
+                "Effective",
+                "The date it takes effect, as YYYY-MM-DD"
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

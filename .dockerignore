@@ -1,0 +1,17 @@
+# Only what the build needs goes into the image's build context: never local data, settings or secrets, at any depth.
+**/.git
+**/node_modules
+**/.next
+**/.playwright
+**/playwright-report
+**/test-results
+**/coverage
+**/.data
+**/*.db
+**/*.db-*
+**/.env*
+!deploy/.env.example
+**/.vercel
+**/.turbo
+**/.DS_Store
+docs

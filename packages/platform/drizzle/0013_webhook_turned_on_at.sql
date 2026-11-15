@@ -1,0 +1,1 @@
+ALTER TABLE `webhooks` ADD `turned_on_at` text;

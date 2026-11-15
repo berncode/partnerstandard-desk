@@ -1,0 +1,16 @@
+{
+  "title": "Imprint",
+  "effective": "2026-11-10",
+  "standIn": true,
+  "intro": [
+    "This is a stand-in. PartnerStandard Desk's hosted service at https://desk.partnerstandard.com shows its operator's own imprint, which its build adds from a private place. A server you run yourself shows none of these pages: it links to your own, set with `LEGAL_IMPRINT_URL` (deploy/.env.example)."
+  ],
+  "sections": [
+    {
+      "heading": "Who operates this site",
+      "blocks": [
+        "The operator's name, address and contact, as the law of their country asks."
+      ]
+    }
+  ]
+}

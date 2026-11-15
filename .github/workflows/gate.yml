@@ -1,0 +1,49 @@
+name: gate
+
+on:
+  pull_request:
+    branches: [main, preproduction]
+  workflow_dispatch:
+
+concurrency:
+  group: gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm build
+      # Both editions: Playwright makes a fresh database for each, at .data/e2e/hosted and
+      # .data/e2e/database, and starts two servers from one build: hosted on 3800 (migrated first) and a company server
+      # (EDITION=self-hosted) on 3801, which migrates its own on start (apps/web/playwright.config.ts). Both
+      # run with test sign-in and without VERCEL_ENV.
+      - run: pnpm e2e
+        env:
+          CI: '1'
+
+  # The self-hosted image: built and started as a company runs it, so a Dockerfile that misses a new package
+  # fails here, not on a release tag. amd64 only; the release workflow checks arm64 too.
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: partnerstandard-desk:check
+          cache-from: type=gha,scope=linux/amd64
+      - run: scripts/release/image-check.sh partnerstandard-desk:check

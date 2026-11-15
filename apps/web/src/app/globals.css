@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* Dark follows <html data-theme>, set from the viewer's choice (src/ui/theme.ts), not the device setting alone. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-on-brand: var(--on-brand);
+  --color-partner: var(--partner);
+  --color-partner-soft: var(--partner-soft);
+  --color-joint: var(--joint);
+  --color-joint-soft: var(--joint-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-s1: var(--s1);
+  --color-s2: var(--s2);
+  --color-s3: var(--s3);
+  --color-s4: var(--s4);
+  --color-s5: var(--s5);
+}
+
+:root {
+  color-scheme: light;
+  --canvas: #f6f7f5;
+  --surface: #ffffff;
+  --surface-2: #eff2ee;
+  --ink: #121614;
+  --ink-2: #48514c;
+  /* ≥4.5:1 on surface, canvas and surface-2 */
+  --ink-3: #646d67;
+  --line: #e1e5e1;
+  --brand: #29ba74;
+  /* ≥4.5:1 on brand-soft (badges) and for on-brand text on it (primary buttons) */
+  --brand-strong: #197c49;
+  --brand-soft: #e2f5ea;
+  --on-brand: #ffffff;
+  --partner: #5352cc;
+  --partner-soft: #ecebfc;
+  --joint: #0b6f86;
+  --joint-soft: #e0f1f5;
+  --warn: #a85a06;
+  --warn-soft: #fcf0da;
+  --danger: #be3d0c;
+  --danger-soft: #fce7de;
+  --info: #2459d6;
+  --info-soft: #e6edfc;
+  /* Chart series: the partner's revenue by source (src/cases/revenue-chart.tsx), the Business Case app's colors. */
+  --s1: #197c49;
+  --s2: #5fcf98;
+  --s3: #2f6fb0;
+  --s4: #8fb8e6;
+  --s5: #c98a2b;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #0c100e;
+  --surface: #141a17;
+  --surface-2: #1b221f;
+  --ink: #edf1ee;
+  --ink-2: #b2bbb5;
+  --ink-3: #848d87;
+  --line: #29302c;
+  --brand: #34c983;
+  --brand-strong: #29ba74;
+  --brand-soft: #11301f;
+  --on-brand: #05140c;
+  --partner: #a2a1f6;
+  --partner-soft: #24234a;
+  --joint: #5cc8df;
+  --joint-soft: #0f2b32;
+  --warn: #f0b35c;
+  --warn-soft: #33240e;
+  --danger: #f28c62;
+  --danger-soft: #3a1b11;
+  --info: #85acf8;
+  --info-soft: #162441;
+  --s1: #29ba74;
+  --s2: #9be3bf;
+  --s3: #4f8fd6;
+  --s4: #a9cbf2;
+  --s5: #e0a64a;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--brand-soft);
+}
+
+/* Print is always light, also for dark-mode users: every color token gets its light (or print) value. */
+@media print {
+  @page { margin: 14mm; }
+  /* The guide's journey, on a page turned sideways so its words stay readable. */
+  @page journey { size: landscape; }
+  :root,
+  :root[data-theme] {
+    color-scheme: light;
+    --canvas: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f3f4f2;
+    --ink: #000000;
+    --ink-2: #333333;
+    --ink-3: #666666;
+    --line: #d4d7d4;
+    --brand: #29ba74;
+    --brand-strong: #197c49;
+    --brand-soft: #e2f5ea;
+    --on-brand: #ffffff;
+    --partner: #5352cc;
+    --partner-soft: #ecebfc;
+    --joint: #0b6f86;
+    --joint-soft: #e0f1f5;
+    --warn: #a85a06;
+    --warn-soft: #fcf0da;
+    --danger: #be3d0c;
+    --danger-soft: #fce7de;
+    --info: #2459d6;
+    --info-soft: #e6edfc;
+    --s1: #197c49;
+    --s2: #5fcf98;
+    --s3: #2f6fb0;
+    --s4: #8fb8e6;
+    --s5: #c98a2b;
+  }
+}
+
+/* The phone panel slides in from the left (the sidebar, src/frame/sidebar.tsx). */
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.slide-in-left { animation: slide-in-left 180ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-left { animation: none; }
+}
+
+/* Loading screens (src/ui/loading.tsx): the page's outline shimmers, a green bar moves along the top. */
+@keyframes skeleton-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--line) 30%, var(--surface-2) 50%, var(--line) 70%) 0 0 / 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes loading-bar {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(400%); }
+}
+/* It waits 150 ms, so a page that comes at once doesn't flash it. */
+.loading-bar { animation: loading-bar 1.2s ease-in-out 150ms infinite both; }
+/* The dot beside a sidebar link while its page is on the way (src/frame/nav-items.tsx). */
+@keyframes link-pending {
+  50% { opacity: 0.3; }
+}
+.link-pending { animation: link-pending 0.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton, .loading-bar, .link-pending { animation: none; }
+  .loading-bar { width: 100%; }
+}

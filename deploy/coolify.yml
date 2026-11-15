@@ -1,0 +1,27 @@
+# documentation: https://github.com/berncode/partnerstandard-desk/blob/main/docs/self-hosting.md
+# slogan: One workspace where a partner manager runs each partner, from the first idea to exit.
+# tags: partners, partnerships, crm, business case, mutual action plan
+# port: 3000
+#
+# PartnerStandard Desk as a Coolify service (plan 17, task 6). Coolify gives it its address and HTTPS, and makes the secret.
+# Fill in ADMIN_EMAIL, RESEND_API_KEY and EMAIL_FROM. Backups: Coolify's own volume backups, or Litestream
+# (docs/self-hosting.md). One instance only: the database is one file.
+services:
+  partnerstandard-desk:
+    image: ghcr.io/berncode/partnerstandard-desk:1
+    environment:
+      - SERVICE_URL_PARTNERSTANDARDDESK_3000
+      - APP_URL=${SERVICE_URL_PARTNERSTANDARDDESK_3000}
+      - BETTER_AUTH_SECRET=${SERVICE_PASSWORD_64_AUTH}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:?}
+      - RESEND_API_KEY=${RESEND_API_KEY:?}
+      - EMAIL_FROM=${EMAIL_FROM:?}
+      - UPDATE_CHECK=${UPDATE_CHECK:-on}
+    volumes:
+      - partnerstandard-desk-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s

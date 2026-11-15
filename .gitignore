@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# tests
+coverage/
+playwright-report/
+test-results/
+
+# local data and secrets
+.data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+.env
+.env*.local
+
+# tools
+.vercel/
+.turbo/
+.DS_Store
+*.log
+
+# playwright
+.playwright/
+
+# written by next dev on start
+apps/web/AGENTS.md
+
+# agents' scratch work (spikes, task notes): never committed
+.superpowers/

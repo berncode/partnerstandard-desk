@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm --filter @partner-desk/web legal-pages && pnpm --filter @partner-desk/platform db:migrate && pnpm build",
+  "regions": ["dub1"],
+  "crons": [{ "path": "/api/cron/tick", "schedule": "*/15 * * * *" }]
+}

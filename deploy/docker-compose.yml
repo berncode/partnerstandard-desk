@@ -1,0 +1,68 @@
+# PartnerStandard Desk on your own server (docs/self-hosting.md). From this folder:
+#
+#   cp .env.example .env        # then fill it in
+#   docker compose up -d                          # the app alone, on this computer's port 3000
+#   docker compose --profile https up -d          # with Caddy: HTTPS on APP_DOMAIN
+#   docker compose --profile https --profile backup up -d   # and Litestream: the database streamed to S3-type storage
+#
+# One app container only: the database is one SQLite file (spec 2026-11-07 §10).
+name: partnerstandard-desk
+
+services:
+  app:
+    image: ${DESK_IMAGE:-ghcr.io/berncode/partnerstandard-desk}:${DESK_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      EDITION: self-hosted
+      DATABASE_URL: file:/data/partnerstandard-desk.db
+      # The backup keys are Litestream's only: the app, which faces the internet, never holds them.
+      LITESTREAM_ACCESS_KEY_ID: ""
+      LITESTREAM_SECRET_ACCESS_KEY: ""
+    volumes:
+      - data:/data
+    # Only this computer reaches the app directly; Caddy (or your own proxy) serves it to everyone else.
+    ports:
+      - ${APP_PORT:-127.0.0.1:3000}:3000
+    # Time to finish what it is doing before it stops: a run of the job takes up to a minute.
+    stop_grace_period: 60s
+
+  caddy:
+    profiles: [https]
+    image: caddy:2
+    restart: unless-stopped
+    depends_on: [app]
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:-}
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+  litestream:
+    profiles: [backup]
+    image: litestream/litestream:0.5.18
+    restart: unless-stopped
+    depends_on: [app]
+    # The app's user: the files Litestream writes beside the database stay the app's.
+    user: "1000:1000"
+    command: replicate
+    environment:
+      LITESTREAM_BUCKET: ${LITESTREAM_BUCKET:-}
+      LITESTREAM_PATH: ${LITESTREAM_PATH:-partnerstandard-desk}
+      LITESTREAM_ENDPOINT: ${LITESTREAM_ENDPOINT:-}
+      LITESTREAM_REGION: ${LITESTREAM_REGION:-}
+      LITESTREAM_ACCESS_KEY_ID: ${LITESTREAM_ACCESS_KEY_ID:-}
+      LITESTREAM_SECRET_ACCESS_KEY: ${LITESTREAM_SECRET_ACCESS_KEY:-}
+    volumes:
+      - data:/data
+      - ./litestream.yml:/etc/litestream.yml:ro
+
+volumes:
+  data:
+  caddy-data:
+  caddy-config:

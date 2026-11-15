@@ -1,0 +1,3 @@
+-- Reads record no event any more (the owner, 2026-11-14: nothing used them). This deletes the ones recorded before;
+-- the list is UNRECORDED_COMMANDS of packages/commands/src/result.ts on that day, checked by migrations.test.ts. Changes stay.
+DELETE FROM `events` WHERE `command` IN ('partners.read', 'markets.read', 'markets.list', 'companyFacts.read', 'programs.list', 'programs.read', 'cases.list', 'cases.read', 'maps.list', 'maps.read', 'reviews.list', 'reviews.read', 'week.read', 'webhooks.list', 'webhooks.deliveries', 'proposals.list', 'members.list', 'company.read', 'maps.notifyRead', 'files.export');

@@ -1,0 +1,120 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildSearchPrompt > hypothesis prompt matches snapshot 1`] = `
+"# Find partners
+
+## About us
+- Company: Invoicely
+- Product: Halden Endpoint
+- Target customers: Companies with 20-500 staff
+
+## The market
+- Market: Austria
+- Partner type: Reseller
+- Why the partner route works: Buyers trust local IT firms.
+- Must-haves for a partner:
+  - Sells into companies with 20-500 staff
+- How the market buys: Partners commit only once an end customer is attached
+- Statement: In Austria, IT service companies will resell it.
+
+## Your task
+We have already spoken with a company in this market. Find companies like it that also meet the must-haves above.
+
+- Companies like this one: IT firms with 10-50 staff
+- Their side of the hypothesis: They lose deals without it.
+- Examples of companies we have spoken with:
+  - Delta Inc (delta.example)
+
+## Leave out
+Do not list any of these companies. They are already on our list as this partner type, or excluded.
+- Acme GmbH (acme.example)
+- Delta Inc (delta.example)
+- Gamma Ltd: Competes with us
+- Zeta AG (zeta.example)
+- Omega GmbH (omega.example): Existing partner
+
+## Desk check help
+For each company you find, note the public evidence on:
+- Customer base: who their customers are, and how much they overlap with our target customers.
+- Credibility: how close their portfolio is to ours, and whether customers would believe the combination.
+- Capability: whether they already sell or deliver in the way this partner type needs.
+
+Commitment cannot be judged from public information, so leave it out. Do not give scores.
+
+## Honesty rules
+- List only companies that exist.
+- Give a source link for each company.
+- Say when you are unsure.
+- Never invent a company, a website, a fact or a source.
+
+## Output
+Answer with one Markdown table and exactly these columns:
+
+| Company | Website | Country | Vertical | Sub-vertical | Target customer type | Partner type | Why it fits | Evidence and sources | Existing partnerships |
+|---|---|---|---|---|---|---|---|---|---|
+
+Put one company on each row. Use one line for each cell.
+
+Also give the same companies as a CSV file named partners.csv, so it can be imported into PartnerStandard Desk. Use the same columns in the same order, with the column names as the first row, a comma between cells and every cell in double quotes. If you cannot create files, put the CSV in a code block after the table instead.
+
+## How many
+Give at least 5 companies and at most 25, unless the market is small. Fewer is a valid answer: if only a few companies exist, list only those.
+"
+`;
+
+exports[`buildSearchPrompt > market prompt matches snapshot 1`] = `
+"# Find partners
+
+## About us
+- Company: Invoicely
+- Product: Halden Endpoint
+- Target customers: Companies with 20-500 staff
+
+## The market
+- Market: Austria
+- Partner type: Reseller
+- Why the partner route works: Buyers trust local IT firms.
+- Must-haves for a partner:
+  - Sells into companies with 20-500 staff
+- How the market buys: Partners commit only once an end customer is attached
+- Statement: In Austria, IT service companies will resell it.
+
+## Your task
+Find companies in this market that meet the must-haves above.
+
+## Leave out
+Do not list any of these companies. They are already on our list as this partner type, or excluded.
+- Acme GmbH (acme.example)
+- Delta Inc (delta.example)
+- Gamma Ltd: Competes with us
+- Zeta AG (zeta.example)
+- Omega GmbH (omega.example): Existing partner
+
+## Desk check help
+For each company you find, note the public evidence on:
+- Customer base: who their customers are, and how much they overlap with our target customers.
+- Credibility: how close their portfolio is to ours, and whether customers would believe the combination.
+- Capability: whether they already sell or deliver in the way this partner type needs.
+
+Commitment cannot be judged from public information, so leave it out. Do not give scores.
+
+## Honesty rules
+- List only companies that exist.
+- Give a source link for each company.
+- Say when you are unsure.
+- Never invent a company, a website, a fact or a source.
+
+## Output
+Answer with one Markdown table and exactly these columns:
+
+| Company | Website | Country | Vertical | Sub-vertical | Target customer type | Partner type | Why it fits | Evidence and sources | Existing partnerships |
+|---|---|---|---|---|---|---|---|---|---|
+
+Put one company on each row. Use one line for each cell.
+
+Also give the same companies as a CSV file named partners.csv, so it can be imported into PartnerStandard Desk. Use the same columns in the same order, with the column names as the first row, a comma between cells and every cell in double quotes. If you cannot create files, put the CSV in a code block after the table instead.
+
+## How many
+Give at least 5 companies and at most 25, unless the market is small. Fewer is a valid answer: if only a few companies exist, list only those.
+"
+`;

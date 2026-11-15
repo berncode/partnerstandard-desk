@@ -1,0 +1,22 @@
+{
+  "name": "@partner-desk/core",
+  "version": "0.1.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-builders": "./src/test-builders.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@partner-desk/copy": "workspace:*",
+    "@partner-desk/method": "workspace:*",
+    "zod": "^4.6.7"
+  }
+}

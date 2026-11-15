@@ -1,0 +1,1 @@
+ALTER TABLE `maps` ADD `last_change_at` text;

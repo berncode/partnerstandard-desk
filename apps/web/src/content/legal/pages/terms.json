@@ -1,0 +1,16 @@
+{
+  "title": "Terms of Service",
+  "effective": "2026-11-10",
+  "standIn": true,
+  "intro": [
+    "This is a stand-in. PartnerStandard Desk's hosted service at https://desk.partnerstandard.com shows its operator's own terms of service, which its build adds from a private place. A server you run yourself shows none of these pages: it links to your own, set with `LEGAL_TERMS_URL` (deploy/.env.example)."
+  ],
+  "sections": [
+    {
+      "heading": "1. What this page is",
+      "blocks": [
+        "The text of the terms of service, as data: a title, the date they take effect, and numbered sections."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@partner-desk/commands",
+  "version": "0.1.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts",
+    "./contract": "./src/map-access.contract.ts",
+    "./proposal-contract": "./src/proposal-index.contract.ts",
+    "./workspace-contract": "./src/workspace.contract.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@partner-desk/copy": "workspace:*",
+    "@partner-desk/core": "workspace:*",
+    "@partner-desk/method": "workspace:*",
+    "@partner-desk/storage": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "vitest": "^5.0.5"
+  }
+}

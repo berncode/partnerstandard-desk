@@ -1,0 +1,6 @@
+# HTTPS for PartnerStandard Desk (docs/self-hosting.md). Caddy gets and renews the certificate for APP_DOMAIN by itself: point
+# the domain's DNS at this server and open ports 80 and 443. Set APP_URL to https://APP_DOMAIN.
+{$APP_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:3000
+}
