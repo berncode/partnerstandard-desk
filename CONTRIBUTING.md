@@ -6,7 +6,7 @@ Thank you for helping. This page says how the code is built, how to run it, and 
 
 Your contribution goes into the project under the project's own licenses: code under AGPL 3.0 only, method content in `packages/method` under CC BY 4.0. On top of that, every outside contribution needs a signed contributor agreement, so PartnerStandard can also offer the project under other terms. You keep your copyright. The text is in [`CLA.md`](CLA.md).
 
-Once signing is set up, a bot asks you to sign on your first pull request. Until then, we can't merge pull requests from outside.
+CLA Assistant asks you to sign on your first pull request; you sign once, with your GitHub account. We can merge a pull request once it is signed.
 
 ## How we work
 

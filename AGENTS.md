@@ -91,7 +91,7 @@ Never commit red. Never skip, disable or loosen a test to get green; fix the cau
 - **Dependencies must fit AGPL 3.0:** MIT, ISC, BSD, Apache-2.0, MPL-2.0, LGPL and GPL-3.0 are fine. Ask the owner before adding anything else (for example proprietary, SSPL, Commons Clause or GPL-2.0-only).
 - **Never copy code** from a source whose license doesn't fit, including snippets from the web without a clear license.
 - **Not covered by the code license:** the method content (tips, starters, examples, call guide, 4C texts, prompts), which is under CC BY 4.0 (decided 2026-11-07), and the PartnerStandard name and logo. Keep method content in its own package (`packages/method`) so it can carry its own license; the app's own words (screens, emails, the guide) are code, mostly in `packages/copy`. The method package imports nothing of the app's.
-- **Outside contributions** need the signed contributor agreement in `CLA.md`; once signing is set up, a bot asks on your first pull request.
+- **Outside contributions** need the signed contributor agreement in `CLA.md`; CLA Assistant asks on the first pull request.
 
 ## Git
 
